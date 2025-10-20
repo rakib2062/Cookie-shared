@@ -9,6 +9,7 @@ This project demonstrates cookie sharing across different domains/subdomains usi
   - [Project Overview](#project-overview)
   - [Prerequisites](#prerequisites)
   - [Setup Instructions](#setup-instructions)
+    - [Clone the Repository](#clone-the-repository)
     - [Laravel Application (cookie-app-server)](#laravel-application-cookie-app-server)
     - [PHP Sites (siteA and siteB)](#php-sites-sitea-and-siteb)
   - [Running the Applications](#running-the-applications)
@@ -38,6 +39,16 @@ Before you begin, ensure you have the following installed on your system:
 ## Setup Instructions
 
 Follow these steps to set up each component of the project.
+
+### Clone the Repository
+
+First, clone the project repository to your local machine:
+
+```bash
+git clone <repository_url>
+cd coockie-test
+```
+*Note: Replace `<repository_url>` with the actual URL of this repository.*
 
 ### Laravel Application (cookie-app-server)
 
@@ -96,13 +107,13 @@ You will need to run each application on its designated port.
 2.  **Start `siteA` on port `8002`**:
     Navigate to the `siteA` directory and run PHP's built-in development server:
     ```bash
-    php -S localhost:8002
+    php -S 127.0.0.1:8002
     ```
 
 3.  **Start `siteB` on port `8003`**:
     Navigate to the `siteB` directory and run PHP's built-in development server:
     ```bash
-    php -S localhost:8003
+    php -S 127.0.0.1:8003
     ```
 
     *Note: Ensure each command is run in a separate terminal window.*
@@ -111,8 +122,8 @@ You will need to run each application on its designated port.
 
 After all applications are running:
 
-1.  Open your web browser and navigate to `http://localhost:8002`.
-2.  Then, navigate to `http://localhost:8003`.
+1.  Open your web browser and navigate to `http://127.0.0.1:8002`.
+2.  Then, navigate to `http://127.0.0.1:8003`.
 
 You should observe that cookies set by the `cookie-app-server` (which `siteA` and `siteB` interact with) are accessible across both `siteA` and `siteB`, demonstrating the shared cookie functionality. Inspect your browser's developer tools (Application -> Cookies) to see the cookies being set and shared.
 
