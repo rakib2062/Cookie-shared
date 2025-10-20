@@ -1,6 +1,6 @@
 <?php
 // Simple demo page to show the tracking cookie value
-$cookieName = 'tracker_id';
+$cookieName = 'ssl-ck-rpd-tracker_id';
 $userId = $_COOKIE[$cookieName] ?? 'No cookie set yet';
 ?>
 <!DOCTYPE html>
@@ -19,7 +19,7 @@ $userId = $_COOKIE[$cookieName] ?? 'No cookie set yet';
 <script>
 (async function syncTracker() {
   const origin = window.location.origin;
-  const localKey = "tracker_id";
+  const localKey = "ssl-ck-rpd-tracker_id";
 
   function getCookie(name) {
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));

@@ -3,13 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Services\CookieService;
-use App\Responses\CommonResponseEntity;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class CookieController extends Controller
 {
@@ -47,13 +44,8 @@ class CookieController extends Controller
         try{
             $redirectUrlResponse = $this->cookieService->redirectSync($request);
             Log::info('Cookie redirectSync service response : ' . $redirectUrlResponse->message. ':' . json_encode($redirectUrlResponse) . ' (' . __METHOD__ . ') [' . __FILE__ . ':' . __LINE__ . '] ');
-
-            if($redirectUrlResponse->statusCode !== 200) {
-                return redirect()->route('/');
-            }
         } catch (Exception $e) {
             Log::error('Something went wrong! : ' . $e->getMessage() . ' (' . __METHOD__ . ') [' . __FILE__ . ':' . __LINE__ . '] ');
-            return redirect()->route('/');    
         }
 
         return redirect()->away($redirectUrlResponse->data);

@@ -30,6 +30,5 @@ class ValidateTrackerOrigin
         }
 
         return $response;
-        // return $next($request);
     }
 }

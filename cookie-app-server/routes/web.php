@@ -8,7 +8,7 @@ Route::get('/', function () {
 });
 
 Route::middleware([
-    // 'validate.tracker.origin', 'throttle:60,1'
+    'validate.tracker.origin', 'throttle:60,1'
     ])->group(function () {
     Route::get('/track', [CookieController::class, 'track']);
     Route::get('/redirect-sync', [CookieController::class, 'redirectSync']);

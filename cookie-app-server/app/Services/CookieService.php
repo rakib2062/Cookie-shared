@@ -4,12 +4,10 @@ namespace App\Services;
 
 use App\Models\TrackerEvent;
 use App\Models\TrackerMapping;
-use App\Repositories\TrackerMappingRepository;
 use App\Responses\CommonResponseEntity;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -28,7 +26,7 @@ class CookieService
                 return $commonResponseEntity;
             }
 
-            $trackerId = $request->cookie('tracker_id');
+            $trackerId = $request->cookie('ssl-ck-rpd-tracker_id');
             $cookieDomain = config('tracker.cookie_domain');
             $cookieMinutes = config('tracker.cookie_minutes');
 
@@ -72,7 +70,7 @@ class CookieService
             // Queue cookie (SameSite=None required for cross-site usage)
             Cookie::queue(
                 cookie(
-                    name: 'tracker_id',
+                    name: 'ssl-ck-rpd-tracker_id',
                     value: $trackerId,
                     minutes: $cookieMinutes,
                     path: '/',
@@ -101,17 +99,20 @@ class CookieService
             $allowed = config('tracker.allowed_origins', []);
 
             if (!$origin || !in_array($origin, $allowed)) {
-                return Response::make('Invalid or missing origin', 400);
+                $commonResponseEntity->statusCode = 400;
+                $commonResponseEntity->message = "Invalid or missing origin";
+                $commonResponseEntity->data = $origin;
+                return $commonResponseEntity;
             }
 
-            $trackerId = $request->cookie('tracker_id') ?? Str::uuid()->toString();
+            $trackerId = $request->cookie('ssl-ck-rpd-tracker_id') ?? Str::uuid()->toString();
             $cookieDomain = config('tracker.cookie_domain');
             $cookieMinutes = config('tracker.cookie_minutes');
 
             // Queue cookie
             Cookie::queue(
                 cookie(
-                    name: 'tracker_id',
+                    name: 'ssl-ck-rpd-tracker_id',
                     value: $trackerId,
                     minutes: $cookieMinutes,
                     path: '/',
