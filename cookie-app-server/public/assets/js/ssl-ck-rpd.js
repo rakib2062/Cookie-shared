@@ -2,6 +2,7 @@
 (async function syncTracker() {
   const origin = window.location.origin;
   const localKey = "ssl-ck-rpd-tracker_id";
+  const baseUrl = "http://127.0.0.1:8001";
 
   function getCookie(name) {
     const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
@@ -11,7 +12,7 @@
   if (getCookie(localKey)) return; // already synced
 
   try {
-    const response = await fetch("http://127.0.0.1:8001/track", {
+    const response = await fetch(`${baseUrl}/track`, {
       credentials: "include",
     });
     if (response.ok) {
@@ -26,11 +27,11 @@
   }
 
   // Fallback redirect-based sync
-  const syncUrl = `http://127.0.0.1:8001/redirect-sync?origin=${encodeURIComponent(origin)}`;
+  const syncUrl = `${baseUrl}/redirect-sync?origin=${encodeURIComponent(origin)}`;
   const trackerParam = new URLSearchParams(window.location.search).get("tracker_id");
 
   if (!trackerParam) {
-    window.location.href = syncUrl;
+    // window.location.href = syncUrl;
   } else {
     document.cookie = `${localKey}=${trackerParam}; path=/; Secure; SameSite=Lax;`;
     window.history.replaceState({}, document.title, window.location.pathname);
